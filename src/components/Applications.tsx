@@ -1,14 +1,42 @@
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
+import { RevealCard } from "@/components/ui/RevealCard";
+import { GlowOrbs } from "@/components/ui/GlowOrbs";
+import { GLASS_LIGHT, GLASS_HOVER } from "@/lib/glass";
 
 function OptimizeDiagram() {
   return (
     <svg viewBox="0 0 200 120" className="h-24 w-full" aria-hidden="true">
       <circle cx="120" cy="60" r="46" fill="none" stroke="#0a0a0a" strokeOpacity="0.12" strokeWidth="1" />
       <circle cx="120" cy="60" r="30" fill="none" stroke="#0a0a0a" strokeOpacity="0.16" strokeWidth="1" />
-      <circle cx="120" cy="60" r="16" fill="#38afd8" fillOpacity="0.14" stroke="#38afd8" strokeOpacity="0.5" strokeWidth="1" />
-      <circle cx="46" cy="86" r="3" fill="#0a0a0a" />
-      <circle cx="70" cy="40" r="3" fill="#0a0a0a" />
+      <circle
+        cx="120"
+        cy="60"
+        r="16"
+        fill="#38afd8"
+        fillOpacity="0.14"
+        stroke="#38afd8"
+        strokeOpacity="0.5"
+        strokeWidth="1"
+        className="origin-center transition-transform duration-300 group-hover:scale-125"
+        style={{ transformOrigin: "120px 60px" }}
+      />
+      <circle
+        cx="46"
+        cy="86"
+        r="3"
+        fill="#0a0a0a"
+        className="origin-center transition-transform duration-300 group-hover:scale-150"
+        style={{ transformOrigin: "46px 86px", transitionDelay: "80ms" }}
+      />
+      <circle
+        cx="70"
+        cy="40"
+        r="3"
+        fill="#0a0a0a"
+        className="origin-center transition-transform duration-300 group-hover:scale-150"
+        style={{ transformOrigin: "70px 40px", transitionDelay: "140ms" }}
+      />
     </svg>
   );
 }
@@ -16,7 +44,14 @@ function OptimizeDiagram() {
 function RecoverDiagram() {
   return (
     <svg viewBox="0 0 200 120" className="h-24 w-full" aria-hidden="true">
-      <path d="M10 90 C 70 90, 90 40, 190 20" fill="none" stroke="#0a0a0a" strokeOpacity="0.45" strokeWidth="1.25" />
+      <path
+        d="M10 90 C 70 90, 90 40, 190 20"
+        fill="none"
+        stroke="#0a0a0a"
+        strokeOpacity="0.45"
+        strokeWidth="1.25"
+        className="transition-all duration-300 group-hover:stroke-[#38afd8] group-hover:stroke-opacity-70"
+      />
       <path
         d="M10 90 C 70 90, 100 95, 190 100"
         fill="none"
@@ -25,8 +60,26 @@ function RecoverDiagram() {
         strokeWidth="1.25"
         strokeDasharray="3 3"
       />
-      <circle cx="86" cy="60" r="3.5" fill="none" stroke="#38afd8" strokeWidth="1.25" />
-      <circle cx="98" cy="88" r="3.5" fill="none" stroke="#38afd8" strokeWidth="1.25" />
+      <circle
+        cx="86"
+        cy="60"
+        r="3.5"
+        fill="none"
+        stroke="#38afd8"
+        strokeWidth="1.25"
+        className="origin-center transition-transform duration-300 group-hover:scale-150"
+        style={{ transformOrigin: "86px 60px" }}
+      />
+      <circle
+        cx="98"
+        cy="88"
+        r="3.5"
+        fill="none"
+        stroke="#38afd8"
+        strokeWidth="1.25"
+        className="origin-center transition-transform duration-300 group-hover:scale-150"
+        style={{ transformOrigin: "98px 88px", transitionDelay: "80ms" }}
+      />
     </svg>
   );
 }
@@ -46,9 +99,31 @@ function DeRiskDiagram() {
         strokeOpacity="0.5"
         strokeWidth="1"
         strokeDasharray="4 3"
+        className="origin-center transition-transform duration-300 group-hover:scale-105"
+        style={{ transformOrigin: "90px 65px" }}
       />
-      <circle cx="152" cy="34" r="3" fill="none" stroke="#0a0a0a" strokeOpacity="0.4" strokeWidth="1" />
-      <circle cx="38" cy="88" r="3" fill="none" stroke="#0a0a0a" strokeOpacity="0.4" strokeWidth="1" />
+      <circle
+        cx="152"
+        cy="34"
+        r="3"
+        fill="none"
+        stroke="#0a0a0a"
+        strokeOpacity="0.4"
+        strokeWidth="1"
+        className="origin-center transition-all duration-300 group-hover:scale-150 group-hover:stroke-[#38afd8] group-hover:stroke-opacity-80"
+        style={{ transformOrigin: "152px 34px" }}
+      />
+      <circle
+        cx="38"
+        cy="88"
+        r="3"
+        fill="none"
+        stroke="#0a0a0a"
+        strokeOpacity="0.4"
+        strokeWidth="1"
+        className="origin-center transition-all duration-300 group-hover:scale-150 group-hover:stroke-[#38afd8] group-hover:stroke-opacity-80"
+        style={{ transformOrigin: "38px 88px", transitionDelay: "80ms" }}
+      />
     </svg>
   );
 }
@@ -76,20 +151,27 @@ export function Applications() {
     <section className="bg-surface py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>Applications</Eyebrow>
-        <Reveal className="mt-4 max-w-3xl text-3xl font-medium leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
           Different development questions. The same learning loop.
         </Reveal>
         <Reveal delay={0.06} className="mt-3 font-mono text-[10px] uppercase tracking-[0.15em] text-ink/35">
           Illustrative application
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-px border border-black/10 bg-black/10 md:grid-cols-3">
+        <div className="relative mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <GlowOrbs />
           {PANELS.map((panel, index) => (
-            <Reveal key={panel.label} delay={index * 0.08} className="bg-surface p-8">
+            <RevealCard
+              key={panel.label}
+              delay={index * 0.1}
+              className={`relative p-8 ${GLASS_LIGHT} ${GLASS_HOVER} cursor-default`}
+            >
               <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-accent">{panel.label}</p>
               <p className="mt-3 text-sm leading-relaxed text-ink/60">{panel.body}</p>
-              <panel.Diagram />
-            </Reveal>
+              <div className="mt-5">
+                <panel.Diagram />
+              </div>
+            </RevealCard>
           ))}
         </div>
 

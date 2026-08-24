@@ -1,7 +1,15 @@
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
+import { RevealCard } from "@/components/ui/RevealCard";
+import { GlowOrbs } from "@/components/ui/GlowOrbs";
+import { GLASS_LIGHT, GLASS_HOVER } from "@/lib/glass";
 
 function LimitedExperimentsDiagram() {
+  const dots: [number, number][] = [
+    [34, 86],
+    [150, 30],
+    [96, 60],
+  ];
   return (
     <svg viewBox="0 0 200 120" className="h-24 w-full" aria-hidden="true">
       <defs>
@@ -10,15 +18,34 @@ function LimitedExperimentsDiagram() {
         </pattern>
       </defs>
       <rect x="0" y="0" width="200" height="120" fill="url(#ledg)" />
-      <circle cx="34" cy="86" r="3.5" fill="#0a0a0a" />
-      <circle cx="150" cy="30" r="3.5" fill="#0a0a0a" />
-      <circle cx="96" cy="60" r="3.5" fill="#0a0a0a" />
+      {dots.map(([cx, cy], i) => (
+        <circle
+          key={i}
+          cx={cx}
+          cy={cy}
+          r="3.5"
+          fill="#0a0a0a"
+          className="origin-center transition-all duration-300 group-hover:scale-[1.6]"
+          style={{ transformOrigin: `${cx}px ${cy}px`, transitionDelay: `${i * 60}ms` }}
+        />
+      ))}
+      {/* the next candidate — a hollow ring that only appears on hover */}
+      <circle
+        cx={150}
+        cy={90}
+        r="4"
+        fill="none"
+        stroke="#38afd8"
+        strokeWidth="1.5"
+        className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ transitionDelay: "220ms" }}
+      />
     </svg>
   );
 }
 
 function InteractingVariablesDiagram() {
-  const nodes = [
+  const nodes: [number, number][] = [
     [40, 30],
     [160, 24],
     [100, 66],
@@ -44,10 +71,19 @@ function InteractingVariablesDiagram() {
           stroke="#0a0a0a"
           strokeOpacity="0.18"
           strokeWidth="1"
+          className="transition-all duration-300 group-hover:stroke-[#38afd8] group-hover:stroke-opacity-40"
         />
       ))}
       {nodes.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r="3.5" fill="#0a0a0a" />
+        <circle
+          key={i}
+          cx={x}
+          cy={y}
+          r="3.5"
+          fill="#0a0a0a"
+          className="origin-center transition-all duration-300 group-hover:scale-150 group-hover:fill-[#38afd8]"
+          style={{ transformOrigin: `${x}px ${y}px`, transitionDelay: `${i * 50}ms` }}
+        />
       ))}
     </svg>
   );
@@ -73,6 +109,8 @@ function FragmentedLearningDiagram() {
           stroke="#0a0a0a"
           strokeOpacity="0.35"
           strokeWidth="1"
+          className="origin-center transition-all duration-300 group-hover:scale-110 group-hover:stroke-[#38afd8]"
+          style={{ transformOrigin: `${x + 17}px ${y + 12}px`, transitionDelay: `${i * 60}ms` }}
         />
       ))}
     </svg>
@@ -102,7 +140,7 @@ export function Problem() {
     <section className="bg-surface py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>Problem</Eyebrow>
-        <Reveal className="mt-4 max-w-3xl text-3xl font-medium leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
           The best process you have tested is not necessarily the best
           process you can achieve.
         </Reveal>
@@ -115,20 +153,27 @@ export function Problem() {
           is still missing.
         </Reveal>
 
-        <div className="mt-16 grid grid-cols-1 gap-10 border-t border-black/10 pt-10 sm:grid-cols-3 sm:gap-8 sm:divide-x sm:divide-black/10">
+        <div className="relative mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <GlowOrbs />
           {COLUMNS.map((column, index) => (
-            <Reveal key={column.label} delay={index * 0.08} className="sm:px-6 sm:first:pl-0">
+            <RevealCard
+              key={column.label}
+              delay={index * 0.1}
+              className={`relative p-6 sm:p-7 ${GLASS_LIGHT} ${GLASS_HOVER} cursor-default`}
+            >
               <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-ink/45">
                 {column.label}
               </p>
               <p className="mt-3 text-sm leading-relaxed text-ink/60">{column.body}</p>
-              <column.Diagram />
-            </Reveal>
+              <div className="mt-5">
+                <column.Diagram />
+              </div>
+            </RevealCard>
           ))}
         </div>
 
         <Reveal delay={0.1} className="mt-16 border-t border-black/10 pt-10">
-          <p className="text-2xl font-medium tracking-tight text-ink md:text-3xl">
+          <p className="text-2xl font-semibold tracking-tight text-ink md:text-3xl">
             The process space is larger than the laboratory can physically
             sample.
           </p>

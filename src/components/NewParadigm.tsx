@@ -50,7 +50,7 @@ export function NewParadigm() {
     <section className="bg-white py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>The new paradigm</Eyebrow>
-        <Reveal className="mt-4 max-w-3xl text-3xl font-medium leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
           Let experiments build the model that guides the experiments.
         </Reveal>
 
@@ -95,7 +95,7 @@ export function NewParadigm() {
           {NODES.map((node, i) => (
             <motion.div
               key={node.key}
-              className="absolute w-44 -translate-x-1/2 -translate-y-1/2 text-center sm:w-56"
+              className="group absolute w-44 -translate-x-1/2 -translate-y-1/2 cursor-default text-center sm:w-56"
               style={{ left: `${node.x}%`, top: `${node.y}%` }}
               variants={fadeUp}
               initial="hidden"
@@ -103,8 +103,8 @@ export function NewParadigm() {
               viewport={revealViewport}
               transition={{ delay: 0.15 + i * 0.1 }}
             >
-              <div className="mx-auto h-2 w-2 rounded-full bg-accent" />
-              <p className="mt-3 text-sm font-medium text-ink">{node.label}</p>
+              <div className="mx-auto h-2 w-2 rounded-full bg-accent transition-all duration-300 group-hover:scale-[1.8] group-hover:shadow-glow-sm" />
+              <p className="mt-3 text-sm font-semibold text-ink">{node.label}</p>
               <p className="mt-1.5 text-xs leading-relaxed text-ink/55">{node.body}</p>
             </motion.div>
           ))}

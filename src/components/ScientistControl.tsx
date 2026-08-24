@@ -1,5 +1,6 @@
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
+import { GlowOrbs } from "@/components/ui/GlowOrbs";
 
 const SPECIALISTS = [
   { label: "Design", body: "Informative experiment selection", x: 50, y: 11 },
@@ -25,12 +26,13 @@ export function ScientistControl() {
     <section className="bg-white py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>Scientist-led AI</Eyebrow>
-        <Reveal className="mt-4 max-w-3xl text-3xl font-medium leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
           Trellis coordinates the specialists. The scientist makes the
           decisions.
         </Reveal>
 
         <div className="relative mx-auto mt-20 aspect-square w-full max-w-lg md:mt-24">
+          <GlowOrbs />
           <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full overflow-visible">
             {SPECIALISTS.map((node, i) => (
               <line
@@ -50,11 +52,11 @@ export function ScientistControl() {
             <Reveal
               key={node.label}
               delay={0.06 * i}
-              className="absolute w-32 -translate-x-1/2 -translate-y-1/2 text-center sm:w-40"
+              className="group absolute w-32 -translate-x-1/2 -translate-y-1/2 cursor-default text-center sm:w-40"
               style={{ left: `${node.x}%`, top: `${node.y}%` }}
             >
-              <div className="mx-auto h-2 w-2 rounded-full border border-ink/30 bg-white" />
-              <p className="mt-2.5 font-mono text-[10px] uppercase tracking-[0.15em] text-ink/70">
+              <div className="mx-auto h-2 w-2 rounded-full border border-ink/30 bg-white transition-all duration-300 group-hover:scale-150 group-hover:border-accent group-hover:bg-accent group-hover:shadow-glow-sm" />
+              <p className="mt-2.5 font-mono text-[10px] uppercase tracking-[0.15em] text-ink/70 transition-colors duration-300 group-hover:text-accent">
                 {node.label}
               </p>
               <p className="mt-1 text-xs leading-snug text-ink/45">{node.body}</p>
@@ -62,10 +64,10 @@ export function ScientistControl() {
           ))}
 
           <Reveal
-            className="absolute w-36 -translate-x-1/2 -translate-y-1/2 text-center sm:w-44"
+            className="group absolute w-36 -translate-x-1/2 -translate-y-1/2 cursor-default text-center sm:w-44"
             style={{ left: "50%", top: "50%" }}
           >
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-sm border border-accent/50 bg-surface sm:h-20 sm:w-20">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-sm border border-accent/50 bg-white/60 shadow-glow-sm backdrop-blur-md transition-all duration-300 group-hover:scale-105 group-hover:shadow-glow sm:h-20 sm:w-20">
               <span className="font-mono text-[9px] uppercase leading-tight tracking-[0.1em] text-ink">
                 Bioprocess
                 <br />
@@ -93,7 +95,7 @@ export function ScientistControl() {
             {CONTEXT_ITEMS.map((item) => (
               <span
                 key={item}
-                className="rounded-sm border border-black/15 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-ink/60"
+                className="cursor-default rounded-sm border border-black/15 bg-white/40 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-ink/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-white/70 hover:text-ink hover:shadow-glow-sm"
               >
                 {item}
               </span>

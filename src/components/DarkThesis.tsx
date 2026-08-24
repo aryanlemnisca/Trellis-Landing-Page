@@ -20,7 +20,7 @@ export function DarkThesis() {
           <Eyebrow className="text-center">The principle</Eyebrow>
         </Reveal>
         <Reveal delay={0.08}>
-          <p className="mt-5 text-3xl font-medium leading-tight tracking-tight text-white md:text-5xl">
+          <p className="mt-5 text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
             Every experiment should make the next decision clearer.
           </p>
         </Reveal>

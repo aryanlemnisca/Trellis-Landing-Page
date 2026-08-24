@@ -16,7 +16,7 @@ export function Credibility() {
     <section className="bg-white py-24 md:py-32">
       <div className="container-page">
         <Eyebrow>Built for bioprocess development</Eyebrow>
-        <Reveal className="mt-4 max-w-2xl text-3xl font-medium leading-tight tracking-tight text-ink md:text-4xl">
+        <Reveal className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
           A multidisciplinary team across the complete development workflow.
         </Reveal>
         <Reveal delay={0.08} className="mt-6 max-w-xl text-base leading-relaxed text-ink/60">
@@ -30,7 +30,7 @@ export function Credibility() {
           {DOMAINS.map((domain) => (
             <span
               key={domain}
-              className="rounded-sm border border-black/15 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-ink/60"
+              className="cursor-default rounded-sm border border-black/15 bg-white/40 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-ink/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-white/70 hover:text-ink hover:shadow-glow-sm"
             >
               {domain}
             </span>

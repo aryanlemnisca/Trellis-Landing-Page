@@ -64,13 +64,13 @@ function FaqRow({
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="flex w-full items-center justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+        className="group flex w-full items-center justify-between gap-6 rounded-sm px-3 py-6 text-left transition-colors duration-300 -mx-3 hover:bg-white/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
       >
         <span className="text-base font-medium text-ink md:text-lg">{question}</span>
         <span
           aria-hidden="true"
-          className={`shrink-0 font-mono text-xl leading-none text-ink/40 transition-transform duration-200 ${
-            isOpen ? "rotate-45" : ""
+          className={`shrink-0 font-mono text-xl leading-none text-ink/40 transition-all duration-200 group-hover:text-accent ${
+            isOpen ? "rotate-45 text-accent" : ""
           }`}
         >
           +

@@ -127,7 +127,7 @@ export function HowItWorks() {
     <section id="how-it-works" className="bg-white py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>How Trellis works</Eyebrow>
-        <Reveal className="mt-4 max-w-3xl text-3xl font-medium leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
           One continuous scientific learning loop.
         </Reveal>
         <Reveal delay={0.08} className="mt-5 font-mono text-xs uppercase tracking-[0.15em] text-ink/40">
@@ -140,7 +140,7 @@ export function HowItWorks() {
           {STAGES.map((stage, i) => (
             <div key={stage.number} className="flex min-h-[62vh] flex-col justify-center border-t border-black/10 py-10 first:border-t-0 lg:min-h-[68vh]">
               <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">{stage.number}</span>
-              <h3 className="mt-3 text-2xl font-medium tracking-tight text-ink md:text-3xl">{stage.title}</h3>
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">{stage.title}</h3>
               <div className="mt-4 max-w-sm space-y-1.5">
                 {stage.body.map((line) => (
                   <p key={line} className="text-base leading-relaxed text-ink/60">
