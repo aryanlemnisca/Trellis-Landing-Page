@@ -4,11 +4,13 @@ import { useRef, useState } from "react";
 import { useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
+import { CircularDial } from "@/components/ui/CircularDial";
 
 const STAGES = [
   {
     number: "01",
     title: "Question",
+    tagline: "Scope the question",
     body: [
       "What is the team trying to improve?",
       "What constraints matter?",
@@ -19,31 +21,37 @@ const STAGES = [
   {
     number: "02",
     title: "Design",
+    tagline: "Information value",
     body: ["Select experiments appropriate to the current scientific question."],
   },
   {
     number: "03",
     title: "Protocol",
+    tagline: "Executable plan",
     body: ["Turn experimental intent into an executable plan."],
   },
   {
     number: "04",
     title: "Data",
+    tagline: "Consistent structure",
     body: ["Bring experimental results and context into a consistent analytical structure."],
   },
   {
     number: "05",
     title: "Model",
+    tagline: "Evidence fit",
     body: ["Apply an appropriate modelling approach to understand what the evidence supports."],
   },
   {
     number: "06",
     title: "Simulate",
+    tagline: "Trade-offs",
     body: ["Explore sensitivities, interactions, uncertainty, trade-offs and candidate regions."],
   },
   {
     number: "07",
     title: "Decide",
+    tagline: "Next experiment",
     body: ["Identify the physical experiment or decision that would create the most useful next evidence."],
   },
 ] as const;
@@ -59,52 +67,6 @@ function CompactDots({ activeIndex }: { activeIndex: number }) {
           }`}
         />
       ))}
-    </div>
-  );
-}
-
-function StageTimeline({ activeIndex }: { activeIndex: number }) {
-  return (
-    <div className="flex h-full flex-col justify-center">
-      {STAGES.map((stage, i) => {
-        const reached = i <= activeIndex;
-        const isActive = i === activeIndex;
-        return (
-          <div key={stage.number} className="flex items-stretch">
-            <div className="flex flex-col items-center">
-              <span
-                className={`h-3 w-3 shrink-0 rounded-full border transition-colors duration-300 ${
-                  reached ? "border-accent bg-accent" : "border-ink/20 bg-transparent"
-                } ${isActive ? "ring-4 ring-accent/15" : ""}`}
-              />
-              {i < STAGES.length - 1 && (
-                <span
-                  className={`w-px flex-1 transition-colors duration-500 ${
-                    i < activeIndex ? "bg-accent/40" : "bg-ink/10"
-                  }`}
-                  style={{ minHeight: "2.75rem" }}
-                />
-              )}
-            </div>
-            <div className="ml-4 pb-11">
-              <p
-                className={`font-mono text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
-                  reached ? "text-ink" : "text-ink/30"
-                }`}
-              >
-                {stage.number} · {stage.title}
-              </p>
-            </div>
-          </div>
-        );
-      })}
-      <p
-        className={`ml-7 font-mono text-[10px] uppercase tracking-[0.15em] transition-opacity duration-500 ${
-          activeIndex === STAGES.length - 1 ? "text-accent opacity-100" : "opacity-0"
-        }`}
-      >
-        → the loop continues
-      </p>
     </div>
   );
 }
@@ -127,7 +89,7 @@ export function HowItWorks() {
     <section id="how-it-works" className="bg-white py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>How Trellis works</Eyebrow>
-        <Reveal className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-3xl text-4xl font-bold leading-[0.95] tracking-tight text-ink md:text-6xl">
           One continuous scientific learning loop.
         </Reveal>
         <Reveal delay={0.08} className="mt-5 font-mono text-xs uppercase tracking-[0.15em] text-ink/40">
@@ -140,7 +102,7 @@ export function HowItWorks() {
           {STAGES.map((stage, i) => (
             <div key={stage.number} className="flex min-h-[62vh] flex-col justify-center border-t border-black/10 py-10 first:border-t-0 lg:min-h-[68vh]">
               <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">{stage.number}</span>
-              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">{stage.title}</h3>
+              <h3 className="mt-3 text-2xl font-bold tracking-tight text-ink md:text-3xl">{stage.title}</h3>
               <div className="mt-4 max-w-sm space-y-1.5">
                 {stage.body.map((line) => (
                   <p key={line} className="text-base leading-relaxed text-ink/60">
@@ -158,8 +120,15 @@ export function HowItWorks() {
         </div>
 
         <div className="hidden lg:block">
-          <div className="sticky top-28 h-[68vh]">
-            <StageTimeline activeIndex={activeIndex} />
+          <div className="sticky top-28 flex h-[68vh] flex-col items-center justify-center gap-6">
+            <CircularDial stages={STAGES} activeIndex={activeIndex} progress={stageProgress} />
+            <p
+              className={`font-mono text-[10px] uppercase tracking-[0.15em] transition-opacity duration-500 ${
+                activeIndex === STAGES.length - 1 ? "text-accent opacity-100" : "opacity-0"
+              }`}
+            >
+              → the loop continues
+            </p>
           </div>
         </div>
       </div>

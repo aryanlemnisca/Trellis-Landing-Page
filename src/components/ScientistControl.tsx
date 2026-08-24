@@ -26,7 +26,7 @@ export function ScientistControl() {
     <section className="bg-white py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>Scientist-led AI</Eyebrow>
-        <Reveal className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-3xl text-4xl font-bold leading-[0.95] tracking-tight text-ink md:text-6xl">
           Trellis coordinates the specialists. The scientist makes the
           decisions.
         </Reveal>

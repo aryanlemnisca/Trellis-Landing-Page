@@ -38,7 +38,7 @@ export function Hero() {
           </Reveal>
 
           <Reveal delay={0.06}>
-            <h1 className="mt-5 text-4xl font-semibold leading-[1.12] tracking-tight text-ink sm:text-5xl">
+            <h1 className="mt-5 text-5xl font-bold leading-[0.95] tracking-tight text-ink sm:text-6xl">
               Don&apos;t settle for a process that merely works.
               <br />
               Reach the <span className="text-accent">true potential</span> of your process.

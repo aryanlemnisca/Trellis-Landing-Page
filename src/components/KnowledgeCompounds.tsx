@@ -85,7 +85,7 @@ export function KnowledgeCompounds() {
     <section className="bg-surface py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>Process understanding</Eyebrow>
-        <Reveal className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-2xl text-4xl font-bold leading-[0.95] tracking-tight text-ink md:text-6xl">
           Your process should not forget what it has already learned.
         </Reveal>
         <Reveal delay={0.08} className="mt-6 max-w-xl text-lg leading-relaxed text-ink/60">

@@ -151,7 +151,7 @@ export function Applications() {
     <section className="bg-surface py-24 md:py-36">
       <div className="container-page">
         <Eyebrow>Applications</Eyebrow>
-        <Reveal className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
+        <Reveal className="mt-4 max-w-3xl text-4xl font-bold leading-[0.95] tracking-tight text-ink md:text-6xl">
           Different development questions. The same learning loop.
         </Reveal>
         <Reveal delay={0.06} className="mt-3 font-mono text-[10px] uppercase tracking-[0.15em] text-ink/35">

@@ -16,7 +16,7 @@ export function Credibility() {
     <section className="bg-white py-24 md:py-32">
       <div className="container-page">
         <Eyebrow>Built for bioprocess development</Eyebrow>
-        <Reveal className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
+        <Reveal className="mt-4 max-w-2xl text-4xl font-bold leading-[0.95] tracking-tight text-ink md:text-5xl">
           A multidisciplinary team across the complete development workflow.
         </Reveal>
         <Reveal delay={0.08} className="mt-6 max-w-xl text-base leading-relaxed text-ink/60">

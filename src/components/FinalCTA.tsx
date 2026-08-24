@@ -10,7 +10,7 @@ export function FinalCTA() {
           <Eyebrow>Start with a real development decision</Eyebrow>
         </Reveal>
         <Reveal delay={0.06}>
-          <p className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+          <p className="mt-4 text-4xl font-bold leading-[0.95] tracking-tight text-white md:text-6xl">
             Bring one process. One objective. One unresolved question.
           </p>
         </Reveal>
