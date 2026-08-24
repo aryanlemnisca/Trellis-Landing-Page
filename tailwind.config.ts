@@ -5,8 +5,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // "black" is repointed to the same near-black as "ink" so every existing
+        // Tailwind black/opacity utility (border-black/10, text-black/40, ...)
+        // resolves to the one approved near-black — never a literal #000.
         ink: "#0A0A0A",
-        black: "#000000",
+        black: "#0A0A0A",
         surface: "#F5F5F5",
         accent: "#38AFD8",
       },
@@ -19,11 +22,16 @@ const config: Config = {
       },
       animation: {
         "fade-up": "fadeUp 0.7s ease-out forwards",
+        "grid-pulse": "gridPulse 9s ease-in-out infinite",
       },
       keyframes: {
         fadeUp: {
           "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        gridPulse: {
+          "0%, 100%": { opacity: "0.5" },
+          "50%": { opacity: "1" },
         },
       },
     },

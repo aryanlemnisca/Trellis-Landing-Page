@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Cta } from "@/components/ui/Cta";
 
 const LINKS = [
   { label: "Tune", href: "https://www.lemnisca.bio/tune" },
@@ -14,7 +15,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/10 bg-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-black/10 bg-surface/85 backdrop-blur-md">
       <div className="container-page flex h-16 items-center justify-between md:h-20">
         <a href="#" className="font-mono text-sm font-medium tracking-tight text-ink">
           TRELLIS <span className="text-black/40">by Lemnisca</span>
@@ -26,19 +27,19 @@ export function Nav() {
               key={link.label}
               href={link.href}
               aria-current={link.current ? "page" : undefined}
-              className={`font-mono text-xs uppercase tracking-[0.15em] transition-colors ${
-                link.current ? "text-accent" : "text-ink/60 hover:text-ink"
+              className={`relative pb-1 font-mono text-xs uppercase tracking-[0.15em] transition-colors ${
+                link.current ? "text-ink" : "text-ink/50 hover:text-ink"
               }`}
             >
               {link.label}
+              {link.current && (
+                <span className="absolute inset-x-0 -bottom-[1px] h-[2px] bg-accent" />
+              )}
             </a>
           ))}
-          <a
-            href="#request"
-            className="rounded-full bg-ink px-5 py-2 font-mono text-xs uppercase tracking-[0.15em] text-white transition-colors hover:bg-accent hover:text-ink"
-          >
+          <Cta href="#request" className="!px-4 !py-2">
             Request a conversation
-          </a>
+          </Cta>
         </nav>
 
         <button
@@ -72,19 +73,15 @@ export function Nav() {
                   key={link.label}
                   href={link.href}
                   className={`font-mono text-xs uppercase tracking-[0.15em] ${
-                    link.current ? "text-accent" : "text-ink/70"
+                    link.current ? "text-ink" : "text-ink/50"
                   }`}
                 >
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#request"
-                onClick={() => setOpen(false)}
-                className="w-fit rounded-full bg-ink px-5 py-2 font-mono text-xs uppercase tracking-[0.15em] text-white"
-              >
+              <Cta href="#request" className="w-fit" onClick={() => setOpen(false)}>
                 Request a conversation
-              </a>
+              </Cta>
             </div>
           </motion.nav>
         )}

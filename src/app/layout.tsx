@@ -18,7 +18,7 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Trellis by Lemnisca — Model-driven bioprocess development",
   description:
-    "Trellis is a scientist-led platform for model-driven bioprocess development. It tells you which experiment is worth running — and how much to trust it — before you commit the time, the material, and the batch.",
+    "Trellis connects experimental design, process data, modelling and next-experiment selection so every experimental round sharpens process understanding and makes the next decision clearer.",
 };
 
 export default function RootLayout({

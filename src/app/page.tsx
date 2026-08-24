@@ -1,13 +1,15 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/hero/Hero";
-import { Stepper } from "@/components/Stepper";
 import { Problem } from "@/components/Problem";
-import { Solution } from "@/components/Solution";
-import { ComparisonDiagram } from "@/components/ComparisonDiagram";
+import { DarkThesis } from "@/components/DarkThesis";
+import { NewParadigm } from "@/components/NewParadigm";
 import { HowItWorks } from "@/components/HowItWorks";
-import { WhoItsFor } from "@/components/WhoItsFor";
-import { WhatItIsNot } from "@/components/WhatItIsNot";
-import { ClosingCTA } from "@/components/ClosingCTA";
+import { KnowledgeCompounds } from "@/components/KnowledgeCompounds";
+import { ScientistControl } from "@/components/ScientistControl";
+import { Applications } from "@/components/Applications";
+import { Credibility } from "@/components/Credibility";
+import { Faq } from "@/components/Faq";
+import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
@@ -15,14 +17,16 @@ export default function Home() {
     <main>
       <Nav />
       <Hero />
-      <Stepper />
       <Problem />
-      <Solution />
-      <ComparisonDiagram />
+      <DarkThesis />
+      <NewParadigm />
       <HowItWorks />
-      <WhoItsFor />
-      <WhatItIsNot />
-      <ClosingCTA />
+      <KnowledgeCompounds />
+      <ScientistControl />
+      <Applications />
+      <Credibility />
+      <Faq />
+      <FinalCTA />
       <Footer />
     </main>
   );

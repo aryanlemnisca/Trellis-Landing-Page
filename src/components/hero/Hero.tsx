@@ -4,10 +4,13 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
+import { Cta } from "@/components/ui/Cta";
+import { HeroStaticFallback } from "./HeroStaticFallback";
 
-/** Lazy-loaded so three.js / R3F never blocks first paint. */
+/** Lazy-loaded so three.js / R3F never blocks first paint or LCP. */
 const HeroScene = dynamic(() => import("./HeroScene").then((mod) => mod.HeroScene), {
   ssr: false,
+  loading: () => <HeroStaticFallback />,
 });
 
 export function Hero() {
@@ -25,41 +28,53 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-black">
-      {/* 3D response-surface scene — right/background half on desktop, full-bleed behind text on mobile */}
-      <div className="absolute inset-0 md:left-[36%]">
-        {mounted && (
-          <HeroScene reduced={Boolean(prefersReducedMotion)} count={isMobile ? 260 : 650} />
-        )}
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent md:via-black/35" />
-      <div className="absolute inset-0 bg-black/50 md:hidden" />
-
-      <div className="container-page relative z-10 flex min-h-[88vh] flex-col justify-center py-28 md:min-h-screen">
+    <section className="bg-surface">
+      <div className="container-page flex flex-col gap-12 py-20 md:py-28 lg:grid lg:grid-cols-[44fr_56fr] lg:items-center lg:gap-8 lg:py-0 lg:min-h-[92vh]">
         <div className="max-w-xl">
           <Reveal>
-            <h1 className="text-[2.5rem] font-medium leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl">
-              &ldquo;I hope this works&rdquo; is the most expensive sentence in your lab.
-            </h1>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/70 md:text-xl">
-              Trellis is a scientist-led platform for model-driven bioprocess
-              development. It tells you which experiment is worth running —
-              and how much to trust it — before you commit the time, the
-              material, and the batch.
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink/45">
+              Trellis / Model-driven bioprocess development
             </p>
           </Reveal>
 
-          <Reveal delay={0.2}>
-            <a
-              href="#request"
-              className="mt-10 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-black transition-colors hover:bg-white"
-            >
-              Request a Trellis conversation →
-            </a>
+          <Reveal delay={0.06}>
+            <h1 className="mt-5 text-4xl font-medium leading-[1.12] tracking-tight text-ink sm:text-5xl">
+              Don&apos;t settle for a process that merely works.
+              <br />
+              Reach the <span className="text-accent">true potential</span> of your process.
+            </h1>
           </Reveal>
+
+          <Reveal delay={0.12}>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/60">
+              Trellis connects experimental design, process data, modelling and
+              next-experiment selection so every experimental round sharpens
+              process understanding and makes the next decision clearer.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.18}>
+            <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Cta href="#request">Request a conversation →</Cta>
+              <Cta href="#how-it-works" variant="secondary">
+                See how Trellis works ↓
+              </Cta>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.24}>
+            <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/35">
+              Scientist-led · Model-driven · Human-approved
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="h-[340px] w-full sm:h-[420px] lg:h-[70vh]">
+          {mounted ? (
+            <HeroScene reduced={Boolean(prefersReducedMotion)} isMobile={isMobile} />
+          ) : (
+            <HeroStaticFallback />
+          )}
         </div>
       </div>
     </section>
