@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { Trail, Html } from "@react-three/drei";
 import * as THREE from "three";
 import { GLOBAL_MINIMUM_INDEX, VALLEYS, landscapeHeight } from "./landscape";
-import { getExplorerState } from "./explorerPath";
+import { getExplorerState, STOP_POSITIONS } from "./explorerPath";
 import { hash } from "@/lib/hash";
 import { smoothstep } from "./easing";
 
@@ -94,6 +94,69 @@ function SamplingScatter({ animate }: { animate: boolean }) {
   );
 }
 
+/**
+ * The candidate for the next experiment: a hollow ring at the destination
+ * valley, flagged while the marker is still travelling there — so every hop
+ * visibly reads as "here's the next experiment worth running" before it
+ * resolves into a measured local or global minimum.
+ */
+function CandidateMarker({ animate }: { animate: boolean }) {
+  const groupRef = useRef<THREE.Group>(null);
+  const ringRef = useRef<THREE.Mesh>(null);
+  const [showLabel, setShowLabel] = useState(false);
+
+  useFrame(({ clock }) => {
+    if (!animate) return;
+    const state = getExplorerState(clock.getElapsedTime());
+    const destination = STOP_POSITIONS[Math.min(state.stopIndex, STOP_POSITIONS.length - 1)];
+    const y = landscapeHeight(destination.x, destination.z);
+
+    const active = state.phase === "travel";
+    const fadeIn = smoothstep(0, 0.2, state.localT);
+    const fadeOut = 1 - smoothstep(0.7, 0.92, state.localT);
+    const opacity = active ? fadeIn * fadeOut : 0;
+
+    if (groupRef.current) {
+      groupRef.current.position.set(destination.x, y + 0.05, destination.z);
+      groupRef.current.visible = active;
+    }
+    if (ringRef.current) {
+      const pulse = 1 + Math.sin(clock.getElapsedTime() * 4.2) * 0.1;
+      ringRef.current.scale.setScalar(pulse);
+      (ringRef.current.material as THREE.MeshBasicMaterial).opacity = opacity * 0.85 * state.envelope;
+    }
+
+    const shouldShow = opacity > 0.15;
+    if (shouldShow !== showLabel) setShowLabel(shouldShow);
+  });
+
+  if (!animate) return null;
+
+  return (
+    <group ref={groupRef}>
+      <mesh ref={ringRef} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.17, 0.23, 32]} />
+        <meshBasicMaterial
+          color="#38afd8"
+          transparent
+          opacity={0}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          depthTest={false}
+        />
+      </mesh>
+      <Html position={[0, 0.5, 0]} center style={{ pointerEvents: "none" }}>
+        <div
+          className="whitespace-nowrap rounded-sm border border-accent/40 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-accent transition-opacity duration-300"
+          style={{ opacity: showLabel ? 1 : 0 }}
+        >
+          Next experiment
+        </div>
+      </Html>
+    </group>
+  );
+}
+
 /** The expanding ring marking the moment the global minimum is found. */
 function ArrivalRing({ animate }: { animate: boolean }) {
   const ref = useRef<THREE.Mesh>(null);
@@ -170,6 +233,7 @@ export function Explorer({ animate }: ExplorerProps) {
         <VisitedMarker key={i} index={i} animate={animate} />
       ))}
       <SamplingScatter animate={animate} />
+      <CandidateMarker animate={animate} />
       <ArrivalRing animate={animate} />
 
       {animate ? (

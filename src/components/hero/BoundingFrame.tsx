@@ -4,20 +4,34 @@ import { useMemo } from "react";
 import * as THREE from "three";
 import { PLANE_SIZE } from "./landscape";
 
-const WIDTH = PLANE_SIZE + 1;
-const HEIGHT = 5.6;
-const CENTER_Y = -0.5;
+const HALF = (PLANE_SIZE + 1) / 2;
+const TOP_Y = 2.3;
 
-/** A static hairline box framing the design space — the "vast, bounded space" this is all happening inside. */
+/**
+ * Just the four top edges of a bounding box — a frame floating above the
+ * terrain, suggesting "a vast bounded space" without the front vertical
+ * edges that read as a hard-edged box cutting across the composition.
+ */
 export function BoundingFrame() {
-  const geometry = useMemo(
-    () => new THREE.EdgesGeometry(new THREE.BoxGeometry(WIDTH, HEIGHT, WIDTH)),
-    []
-  );
+  const geometry = useMemo(() => {
+    const corners = [
+      [-HALF, TOP_Y, -HALF],
+      [HALF, TOP_Y, -HALF],
+      [HALF, TOP_Y, HALF],
+      [-HALF, TOP_Y, HALF],
+    ];
+    const points: THREE.Vector3[] = [];
+    for (let i = 0; i < corners.length; i++) {
+      const a = corners[i];
+      const b = corners[(i + 1) % corners.length];
+      points.push(new THREE.Vector3(...a), new THREE.Vector3(...b));
+    }
+    return new THREE.BufferGeometry().setFromPoints(points);
+  }, []);
 
   return (
-    <lineSegments geometry={geometry} position={[0, CENTER_Y, 0]}>
-      <lineBasicMaterial color="#0a0a0a" transparent opacity={0.12} />
+    <lineSegments geometry={geometry}>
+      <lineBasicMaterial color="#0a0a0a" transparent opacity={0.1} />
     </lineSegments>
   );
 }
