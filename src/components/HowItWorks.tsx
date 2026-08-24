@@ -100,10 +100,22 @@ export function HowItWorks() {
       <div ref={trackRef} className="container-page mt-16 lg:grid lg:grid-cols-2 lg:gap-20">
         <div className="flex flex-col">
           {STAGES.map((stage, i) => (
-            <div key={stage.number} className="flex min-h-[62vh] flex-col justify-center border-t border-black/10 py-10 first:border-t-0 lg:min-h-[68vh]">
-              <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">{stage.number}</span>
-              <h3 className="mt-3 text-2xl font-bold tracking-tight text-ink md:text-3xl">{stage.title}</h3>
-              <div className="mt-4 max-w-sm space-y-1.5">
+            <div
+              key={stage.number}
+              className="relative flex min-h-[42vh] flex-col justify-center overflow-hidden border-t border-black/10 py-10 first:border-t-0 lg:min-h-[48vh]"
+            >
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-4 top-1/2 -translate-y-1/2 select-none font-sans text-[13rem] font-bold leading-none text-ink/[0.04] md:text-[16rem]"
+              >
+                {stage.number}
+              </span>
+
+              <span className="relative font-mono text-xs uppercase tracking-[0.15em] text-accent">
+                {stage.number}
+              </span>
+              <h3 className="relative mt-3 text-2xl font-bold tracking-tight text-ink md:text-3xl">{stage.title}</h3>
+              <div className="relative mt-4 max-w-sm space-y-1.5">
                 {stage.body.map((line) => (
                   <p key={line} className="text-base leading-relaxed text-ink/60">
                     {line}
@@ -112,7 +124,7 @@ export function HowItWorks() {
               </div>
 
               {/* mobile: compact progress, since the sticky panel is desktop-only */}
-              <div className="mt-8 lg:hidden">
+              <div className="relative mt-8 lg:hidden">
                 <CompactDots activeIndex={i} />
               </div>
             </div>
