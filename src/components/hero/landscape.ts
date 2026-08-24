@@ -9,14 +9,14 @@ export const SEGMENTS = 72;
 
 export type Bump = { x: number; z: number; height: number; sigma: number };
 
-/** Textural hills — purely terrain, not destinations. */
+/** Textural hills — purely terrain, not destinations. Tall and steep for real visual drama. */
 const PEAKS: Bump[] = [
-  { x: -1.0, z: 0.8, height: 1.5, sigma: 1.5 },
-  { x: 2.0, z: -0.8, height: 1.25, sigma: 1.3 },
-  { x: -1.8, z: -3.2, height: 1.05, sigma: 1.2 },
-  { x: 4.0, z: 3.4, height: 1.15, sigma: 1.4 },
-  { x: -4.4, z: 1.6, height: 0.95, sigma: 1.3 },
-  { x: 1.2, z: 4.2, height: 0.9, sigma: 1.2 },
+  { x: -1.0, z: 0.8, height: 2.6, sigma: 1.15 },
+  { x: 2.0, z: -0.8, height: 2.2, sigma: 1.0 },
+  { x: -1.8, z: -3.2, height: 1.9, sigma: 0.95 },
+  { x: 4.0, z: 3.4, height: 2.1, sigma: 1.1 },
+  { x: -4.4, z: 1.6, height: 1.7, sigma: 1.0 },
+  { x: 1.2, z: 4.2, height: 1.6, sigma: 0.95 },
 ];
 
 export type Valley = { x: number; z: number; depth: number; sigma: number };
@@ -26,11 +26,11 @@ export type Valley = { x: number; z: number; depth: number; sigma: number };
  * global minimum. Depth is a positive magnitude — larger digs deeper.
  */
 export const VALLEYS: Valley[] = [
-  { x: -4.2, z: -2.0, depth: 1.15, sigma: 1.15 },
-  { x: 3.2, z: -3.4, depth: 1.5, sigma: 1.2 },
-  { x: -3.0, z: 3.2, depth: 1.3, sigma: 1.15 },
-  { x: 4.2, z: 2.2, depth: 1.85, sigma: 1.25 },
-  { x: 0.4, z: -0.5, depth: 2.7, sigma: 1.35 },
+  { x: -4.2, z: -2.0, depth: 2.0, sigma: 0.9 },
+  { x: 3.2, z: -3.4, depth: 2.5, sigma: 0.95 },
+  { x: -3.0, z: 3.2, depth: 2.2, sigma: 0.9 },
+  { x: 4.2, z: 2.2, depth: 3.0, sigma: 1.0 },
+  { x: 0.4, z: -0.5, depth: 4.3, sigma: 1.1 },
 ];
 
 export const GLOBAL_MINIMUM_INDEX = VALLEYS.length - 1;

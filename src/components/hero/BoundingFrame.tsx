@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { PLANE_SIZE } from "./landscape";
 
 const HALF = (PLANE_SIZE + 1) / 2;
-const TOP_Y = 2.3;
+const TOP_Y = 3.4;
 
 /**
  * Just the four top edges of a bounding box — a frame floating above the
