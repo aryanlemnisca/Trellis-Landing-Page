@@ -4,23 +4,10 @@ import { motion } from "framer-motion";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { revealViewport } from "@/lib/motion";
+import { hash } from "@/lib/hash";
 
 const ROWS = 4;
 const COLS = 6;
-
-/**
- * Deterministic pseudo-noise (seeded by index), integer bit-mixing only.
- * Math.sin-based hashes are NOT guaranteed bit-identical across JS engines
- * (server vs. browser), which caused a hydration mismatch here; bitwise
- * operators are exactly specified, so this is stable across environments.
- */
-function hash(i: number) {
-  let x = Math.imul(i + 1, 2654435761);
-  x = (x ^ (x >>> 13)) >>> 0;
-  x = Math.imul(x, 2246822519);
-  x = (x ^ (x >>> 16)) >>> 0;
-  return (x % 1000) / 1000;
-}
 
 type Node = { row: number; col: number; x: number; y: number };
 

@@ -13,3 +13,14 @@ export function rampHold(t: number, rampIn: number, holdEnd: number, rampOut: nu
   if (t < holdEnd) return 1;
   return 1 - smoothstep(holdEnd, rampOut, t);
 }
+
+/** 0 at both ends, 1 at the midpoint — the height of a leap between two points, u in [0,1]. */
+export function arcHeight(u: number): number {
+  return Math.sin(Math.PI * Math.min(Math.max(u, 0), 1));
+}
+
+/** A quick decaying oscillation — the bounce as the ball settles into a valley, u in [0,1]. */
+export function dampedBounce(u: number): number {
+  const decay = Math.exp(-5.5 * u);
+  return decay * Math.cos(u * Math.PI * 3.2);
+}

@@ -3,10 +3,12 @@
 import { Component, Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { ProcessSurfaces } from "./ProcessSurfaces";
-import { EvidenceLayer } from "./EvidenceLayer";
+import { Explorer } from "./Explorer";
+import { BoundingFrame } from "./BoundingFrame";
 import { HeroModel, HeroModelPlaceholder } from "./HeroModel";
 import { HeroStaticFallback } from "./HeroStaticFallback";
-import { PEAK } from "./landscape";
+import { GLOBAL_MINIMUM_INDEX, VALLEYS } from "./landscape";
+import { getExplorerState } from "./explorerPath";
 
 /** Flip to true once /public/models/trellis-hero.glb exists — see HeroModel.tsx. */
 const USE_HERO_MODEL = false;
@@ -32,10 +34,18 @@ class SceneErrorBoundary extends Component<{ children: React.ReactNode }, { hasE
   }
 }
 
-/** Subtle mouse parallax (desktop) + a small controlled scroll-depth transition. No idle auto-rotation. */
-function CameraRig({ interactive }: { interactive: boolean }) {
+const GLOBAL_VALLEY = VALLEYS[GLOBAL_MINIMUM_INDEX];
+const REST_TARGET = { x: GLOBAL_VALLEY.x * 0.5, z: GLOBAL_VALLEY.z * 0.5 };
+
+/**
+ * Subtle mouse parallax (desktop) + a small controlled scroll-depth transition,
+ * plus a slow, lagging camera follow of wherever the explorer currently is.
+ * No idle auto-rotation, no free orbit.
+ */
+function CameraRig({ interactive, animate }: { interactive: boolean; animate: boolean }) {
   const mouse = useRef({ x: 0, y: 0 });
   const scrollFraction = useRef(0);
+  const followTarget = useRef({ ...REST_TARGET });
   const { camera } = useThree();
 
   useEffect(() => {
@@ -55,15 +65,24 @@ function CameraRig({ interactive }: { interactive: boolean }) {
     };
   }, [interactive]);
 
-  useFrame(() => {
-    const targetX = 6.5 + (interactive ? mouse.current.x * 0.35 : 0);
-    const targetY = 4.5 + (interactive ? -mouse.current.y * 0.25 : 0);
-    const targetZ = 7 - scrollFraction.current * 0.7;
+  useFrame(({ clock }) => {
+    if (animate) {
+      const state = getExplorerState(clock.getElapsedTime());
+      followTarget.current.x += (state.x * 0.5 - followTarget.current.x) * 0.02;
+      followTarget.current.z += (state.z * 0.5 - followTarget.current.z) * 0.02;
+    } else {
+      followTarget.current.x += (REST_TARGET.x - followTarget.current.x) * 0.05;
+      followTarget.current.z += (REST_TARGET.z - followTarget.current.z) * 0.05;
+    }
+
+    const targetX = 9 + (interactive ? mouse.current.x * 0.4 : 0);
+    const targetY = 6.5 + (interactive ? -mouse.current.y * 0.3 : 0);
+    const targetZ = 10.5 - scrollFraction.current * 0.8;
 
     camera.position.x += (targetX - camera.position.x) * 0.04;
     camera.position.y += (targetY - camera.position.y) * 0.04;
     camera.position.z += (targetZ - camera.position.z) * 0.04;
-    camera.lookAt(PEAK.x * 0.25, 0.5, PEAK.z * 0.25);
+    camera.lookAt(followTarget.current.x, -0.3, followTarget.current.z);
   });
 
   return null;
@@ -104,11 +123,12 @@ function HeroSceneInner({ reduced, isMobile }: HeroSceneProps) {
         dpr={[1, 1.5]}
         frameloop={active ? "always" : "never"}
         gl={{ antialias: true, alpha: true }}
-        camera={{ position: [6.5, 4.5, 7], fov: 42 }}
+        camera={{ position: [9, 6.5, 10.5], fov: 38 }}
       >
-        <CameraRig interactive={!reduced && !isMobile} />
-        <ProcessSurfaces animate={animate} showAlternatives={!isMobile} />
-        <EvidenceLayer animate={animate} />
+        <CameraRig interactive={!reduced && !isMobile} animate={animate} />
+        <BoundingFrame />
+        <ProcessSurfaces animate={animate} />
+        <Explorer animate={animate} />
 
         {USE_HERO_MODEL && (
           <Suspense fallback={<HeroModelPlaceholder position={[0, 3, 0]} />}>
